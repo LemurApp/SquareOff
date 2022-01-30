@@ -91,11 +91,10 @@ var MainServer = function () {
         // Configure express
         const app = express();
         app.use(express.static(path.join(__dirname, '../build')));
-
         const httpServer = http.createServer(app);
         const options = {
             cors: {
-                origin: "http://" + config.HOST,
+                origin: "*",//"http://" + config.HOST,
                 methods: ["GET", "POST"]
             }
         };

@@ -45,7 +45,9 @@ class MainmenuState extends Phaser.State {
             }
         });
 
-        const connectUrl = `http://${config.HOST}:${config.CONNECT_PORT}`;
+        const connectUrl = `http://${window.location.hostname}:${config.CONNECT_PORT}`
+        console.log("Connecting to " + connectUrl);
+        //const connectUrl = `http://${config.HOST}:${config.CONNECT_PORT}`;
         this.socket = io(connectUrl);
 
         this.socket.on('connect', () => {

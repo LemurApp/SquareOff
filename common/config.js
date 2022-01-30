@@ -9,9 +9,9 @@ if (so_env === 'dev') {
     listen_port = connect_port = 8080;
 }
 else if (so_env === 'prod' ) {
-    host = 'sqoff.com';
+    host = 'sqoff.com'; // note: changed this to window.hostname
     listen_port = 8080;
-    connect_port = 80;
+    connect_port = 8080; // this was 80
 }
 
 const config = {
