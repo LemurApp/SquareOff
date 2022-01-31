@@ -21,7 +21,7 @@ module.exports = function GameState() {
             vel: { x: 0, y: 0 },
             angle: 0,
         },
-        hover_block: { x: -1, y: -1 },
+        hover_block: [{ x: -1, y: -1 }],
         scores: {
             you: 0,
             enemy: 0,

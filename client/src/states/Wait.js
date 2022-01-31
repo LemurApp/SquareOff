@@ -32,8 +32,10 @@ class WaitState extends Phaser.State {
             console.log("Entering Game instance: ", gameInstance.id);
             console.log("Enemy nick: ", gameInstance.enemy.nick);
             console.log("Enemy color: ", gameInstance.enemy.color);
+            console.log("My nick: ", gameInstance.me.nick);
+            console.log("My color: ", gameInstance.me.color);
 
-            self.state.start('GameState', false, false, self.socket, self.player_nick, self.player_color, gameInstance.enemy.nick, gameInstance.enemy.color);
+            self.state.start('GameState', false, false, self.socket, gameInstance.me.nick, gameInstance.me.color, gameInstance.enemy.nick, gameInstance.enemy.color);
         });
 
         //TODO: add invite friend button to wait state for those tired of waiting

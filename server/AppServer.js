@@ -33,12 +33,13 @@ var AppServer = function (io) {
             self.players[socket.id] = current_player;
 
             // Try to find a match for the player, if we can't, put them in the wait queue
-            var matchedPlayer = self.findMatch(current_player);
-            if (matchedPlayer) {
+            var [matchA, matchB] = self.findMatch(current_player);
+            if (matchA && matchB) {
                 console.log("Creating new game instance");
-                console.log("Player A: ", matchedPlayer.id);
-                console.log("Player B: ", current_player.id);
-                var gameInstance = new GameInstance(matchedPlayer, current_player);
+                console.log("Player A: ", matchA.id);
+                console.log("Player B: ", matchB.id);
+                console.log("Player C: ", current_player.id);
+                var gameInstance = new GameInstance(matchA, matchB, current_player);
                 self.game_instances.push(gameInstance);
             }
             else {
@@ -113,7 +114,8 @@ var AppServer = function (io) {
      * @param player
      */
     self.findMatch = function appFindMatch(player) {
-        var match = false;
+        var matchA = false;
+        var matchB = false;
 
         console.log("Searching for match for player: ", player.id, player.nick);
 
@@ -123,15 +125,34 @@ var AppServer = function (io) {
             // Put any matching logic here
 
             // Don't match up mwcz or jared
-            if (waitingPlayer && !self.isScriptaMatchup(player, waitingPlayer)) {
-                match = waitingPlayer;
+            if (waitingPlayer) {
+                matchA = waitingPlayer;
                 self.waiting_players.splice(i, 1);
-                console.log("Found match: ", match.id, match.nick);
+                console.log("Found match: ", matchA.id, matchA.nick);
                 break;  // found a match
             }
         }
 
-        return match;
+        for (var i = 0; i < self.waiting_players.length; ++i) {
+            var waitingPlayer = self.waiting_players[i];
+
+            // Put any matching logic here
+
+            // Don't match up mwcz or jared
+            if (waitingPlayer) {
+                matchB = waitingPlayer;
+                self.waiting_players.splice(i, 1);
+                console.log("Found match: ", matchB.id, matchB.nick);
+                break;  // found a match
+            }
+        }
+
+        if (matchA && !matchB) {
+            self.waiting_players.push(matchA);
+            matchA = false;
+        }
+
+        return [matchA, matchB];
     };
 
     /**

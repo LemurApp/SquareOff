@@ -14,10 +14,10 @@ schema.tickSchema = sp.build({
         vel: schema.vec2,
         angle: 'float32',
     },
-    hover_block: {
+    hover_block: [{
         x: 'int16',
         y: 'int16',
-    },
+    }],
     scores: {
         you: 'uint8',
         enemy: 'uint8',

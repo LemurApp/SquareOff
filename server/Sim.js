@@ -153,7 +153,7 @@ Sim.prototype.reset = function SimReset() {
     this.world.enableBodyCollision();
 };
 
-Sim.prototype.createBlock = function SimCreateBlock(x, y, player) {
+Sim.prototype.createBlock = function SimCreateBlock(x, y, team, player_id) {
     var blockShape = new p2.Box({ width: 1.00, height: 1.00 });
     blockShape.material = this.bounceMaterial;
 
@@ -162,7 +162,8 @@ Sim.prototype.createBlock = function SimCreateBlock(x, y, player) {
 
     var blockBody = new p2.Body({ position: [px, py] });
     blockBody.addShape(blockShape);
-    blockBody.customPlayer = player;
+    blockBody.customTeam = team;
+    blockBody.customPlayer = player_id;
     blockBody.customType = 'block';
     blockBody.customGridPosition = { x: x, y: y };
 
@@ -210,7 +211,7 @@ Sim.prototype.findBlock = function SimBlockExists(x, y) {
  * Add block to the world.  If block already in world, return false, else returns body created.
  * @return {*}
  */
-Sim.prototype.addBlock = function SimAddBlock(x, y, player) {
+Sim.prototype.addBlock = function SimAddBlock(x, y, team, player_id) {
 
     // add block to sim
 
@@ -226,13 +227,13 @@ Sim.prototype.addBlock = function SimAddBlock(x, y, player) {
         return false;
     }
 
-    var blockBody = this.createBlock(x, y, player, true);
+    var blockBody = this.createBlock(x, y, team, player_id, true);
 
     this.world.addBody(blockBody);
 
     // update gameState grid as well
 
-    this.gameState.grid[y][x] = player === 'a' ? 1 : 2;
+    this.gameState.grid[y][x] = team === 'a' ? 1 : 2;
 
     this.blockPlacedHandler();
 
@@ -260,7 +261,7 @@ Sim.prototype.removeBlock = function SimRemoveBlock(x, y) {
         this.pendingRemoval.push(block);
 
         // report back the destruction
-        this.destroyBlockHandler({ x: x, y: y }, block.customPlayer);
+        this.destroyBlockHandler({ x: x, y: y }, block.customTeam, block.customPlayer);
     }
 
     // update gameState grid as well
@@ -322,12 +323,12 @@ Sim.prototype.handleCollision = function SimHandleCollision(evt) {
 
     // if the disc hit a block, remove the block from the world
     if (obj1.customType === 'disc' && obj2.customType === 'block') {
-        this.destroyBlockHandler({ x: obj2.customGridPosition.x, y: obj2.customGridPosition.y }, obj2.customPlayer);
+        this.destroyBlockHandler({ x: obj2.customGridPosition.x, y: obj2.customGridPosition.y }, obj2.customTeam, obj2.customPlayer);
         this.pendingRemoval.push(obj2);
         this.gameState.grid[obj2.customGridPosition.y][obj2.customGridPosition.x] = 0;
     }
     else if (obj2.customType === 'disc' && obj1.customType === 'block') {
-        this.destroyBlockHandler({ x: obj1.customGridPosition.x, y: obj1.customGridPosition.y }, obj1.customPlayer);
+        this.destroyBlockHandler({ x: obj1.customGridPosition.x, y: obj1.customGridPosition.y }, obj1.customTeam, obj1.customPlayer);
         this.pendingRemoval.push(obj1);
         this.gameState.grid[obj1.customGridPosition.y][obj1.customGridPosition.x] = 0;
     }

@@ -182,6 +182,7 @@ class GameState extends Phaser.State {
 
     applyGameState(buffer) {
         var gameState = schema.tickSchema.decode(buffer);
+        console.log(gameState);
 
         // disc x and y are based on p2 coordinate system which has 0,0 at the
         // center.  translate to phaser coordinate system
@@ -233,7 +234,8 @@ class GameState extends Phaser.State {
         this.playerScoreText.text = gameState.scores.you;
 
         // add enemy hover
-        const hover_block = gameState.hover_block;
+        // TODO: Render all hover blocks, not just 1.
+        const hover_block = gameState.hover_block[0];
         // if a hover has occurred, move the hover sprite to that position
         if (hover_block.x >= 0 && hover_block.y >= 0) {
             this.hover_sprite_enemy.position.copyFrom(this.hover_buttons[hover_block.y][hover_block.x].position);
