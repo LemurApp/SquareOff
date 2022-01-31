@@ -26,8 +26,8 @@ class Player {
         this.socket.removeAllListeners('leave_instance');
         
         // Handle hover listener.
-        this.socket.on("hover_change", (grid_x, grid_y) => this.onHoverChange(grid_x, grid_y));
-        this.socket.on("mouse_click", (grid_x, grid_y) => this.onClick(grid_x, grid_y));
+        this.socket.on("hover_change", (grid_x, grid_y) => this.onClick(grid_x, grid_y));
+        // this.socket.on("mouse_click", (grid_x, grid_y) => this.onClick(grid_x, grid_y));
         this.socket.on("leave_instance", () => this.onLeave());
     }
 
