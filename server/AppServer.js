@@ -116,8 +116,8 @@ var AppServer = function (io) {
 
         console.log("Searching for match for player: ", player.id, player.nick);
         
-        if (self.waiting_players.length >= PLAYERS_ON_TEAM * 2 - 1) {
-            matches = self.waiting_players.splice(0, PLAYERS_ON_TEAM * 2 - 1);
+        if (self.waiting_players.length >= config.PLAYERS_ON_TEAM * 2 - 1) {
+            matches = self.waiting_players.splice(0, config.PLAYERS_ON_TEAM * 2 - 1);
         }
 
         return matches;
