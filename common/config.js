@@ -43,11 +43,12 @@ const config = {
         MAX_SPEED: 26.00,
         MOVE_DELAY: 750, // delay before moving; in ms
     },
+    PLAYERS_ON_TEAM: 3,
     TICK_FAST_INTERVAL: 50,
     WINNING_SCORE: 7,
     WIN_SCREEN_TIMEOUT: 7000,  // time that the player stays on the win/loss scree before starting new game
     MAX_PLACED_BLOCKS: 3,
-    MAX_INACTIVE_TIME: 45000,
+    MAX_INACTIVE_TIME: 450000,
 };
 
 module.exports = config;

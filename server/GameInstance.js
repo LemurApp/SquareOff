@@ -84,16 +84,21 @@ class Team {
     }
 }
 
-function GameInstance(player_a, player_b, player_c) {
+function GameInstance(players) {
     var self = this;
     self.id = uuid.v1(); // Unique ID for this game instance
     self.teams = {
         a: new Team('a', self),
         b: new Team('b', self),
-    }    
-    self.teams.a.addPlayer(player_a);
-    self.teams.a.addPlayer(player_c);
-    self.teams.b.addPlayer(player_b);
+    }
+
+    players.forEach((p, i) => {
+        if (i < config.PLAYERS_ON_TEAM) {
+            self.teams.a.addPlayer(p);
+        } else {
+            self.teams.b.addPlayer(p);
+        }
+    })
 
     self.state = 'active';
 
