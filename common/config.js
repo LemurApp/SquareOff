@@ -23,8 +23,8 @@ const config = {
         HEIGHT: 2000,
     },
     GRID: {
-        WIDTH: 12,
-        HEIGHT: 20,
+        WIDTH: 20,
+        HEIGHT: 40,
         PADDING: {
             VERTICAL: 10,
             HORIZONTAL: 10,
@@ -37,7 +37,7 @@ const config = {
         SAFE_ZONE: 6,
     },
     DISC: {
-        DIAMETER: 1.95, // as a percentage of block height/width
+        DIAMETER: 1.25, // as a percentage of block height/width
         BOUNCE_SPEEDUP: 0.55, // add this amount to disc speed after each bounce
         INITIAL_SPEED: 2.00,
         MAX_SPEED: 26.00,
